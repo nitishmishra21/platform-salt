@@ -58,21 +58,21 @@ gobblin:
   release_version: develop
 
 console_frontend:
-  release_version: develop
+  release_version: PNDA-2834-validate
 
 console_backend_data_logger:
-  release_version: develop
+  release_version: PNDA-2834-validate
   bind_port: 3001
 
 console_backend_data_manager:
-  release_version: develop
+  release_version: PNDA-2834-validate
   bind_port: 3123
 
 console_backend_utils:
-  release_version: develop
+  release_version: PNDA-2834-validate
 
 deployment_manager:
-  release_version: develop
+  release_version: PNDA-2834-validate
   keys_directory: /opt/pnda/dm_keys
 
 package_repository:
