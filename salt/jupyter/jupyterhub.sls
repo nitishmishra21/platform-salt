@@ -24,6 +24,31 @@ jupyterhub-create_config_dir:
     - require:
       - pip: jupyterhub-install
 
+{% if pillar.jupyter.cert is defined %}
+{% set jupyterhub_ssl_cert = jupyterhub_config_dir+'/jupyterhub.cert' %}
+{% set jupyterhub_ssl_key = jupyterhub_config_dir+'/jupyterhub.key' %}
+
+jupyterhub-create_ssl_cert:
+  file.managed:
+    - name: {{ jupyterhub_config_dir }}/jupyterhub.cert
+    - contents_pillar: jupyter:cert
+    - user: root
+    - group: pnda
+    - mode: 640
+
+jupyterhub-create_ssl_key:
+  file.managed:
+    - name: {{ jupyterhub_config_dir }}/jupyterhub.key
+    - contents_pillar: jupyter:key
+    - user: root
+    - group: pnda
+    - mode: 640
+
+{% else %}
+{% set jupyterhub_ssl_cert = '' %}
+{% set jupyterhub_ssl_key = '' %}
+{% endif %}
+
 jupyterhub-create_configuration:
   file.managed:
     - name: {{ jupyterhub_config_dir }}/jupyterhub_config.py
@@ -31,6 +56,8 @@ jupyterhub-create_configuration:
     - template: jinja
     - context:
       virtual_env_dir: {{ virtual_env_dir }}
+      jupyterhub_ssl_cert: {{ jupyterhub_ssl_cert }} 
+      jupyterhub_ssl_key: {{ jupyterhub_ssl_key }}
     - require:
       - file: jupyterhub-create_config_dir
 
