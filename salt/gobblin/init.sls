@@ -2,7 +2,7 @@
 
 {% set packages_server = pillar['packages_server']['base_uri'] %}
 #{% set gobblin_version = pillar['gobblin']['release_version'] %}
-{% set gobblin_version = 'develop'] %}
+{% set gobblin_version = 'develop' %}
 {% set gobblin_package = 'gobblin-distribution-' + gobblin_version + '.tar.gz' %}
 
 {% set pnda_home = pillar['pnda']['homedir'] %}
