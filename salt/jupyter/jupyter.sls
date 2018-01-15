@@ -6,7 +6,7 @@
 {% set jupyter_extension_venv = pnda_home_directory + '/jupyter-extensions' %}
 {% set pnda_user  = pillar['pnda']['user'] %}
 {% set wrapper_spark_home = '/usr/' %}
-
+{% set features = pillar['features'] %}
 {% if grains['hadoop.distro'] == 'HDP' %}
 {% set anaconda_home = '/opt/pnda/anaconda' %}
 {% set spark_home = '/usr/hdp/current/spark-client' %}
@@ -125,6 +125,9 @@ jupyter-copy_data_generator_script:
     - name: {{ pnda_home_directory }}/data_generator.py
     - mode: 555
 
+# BEGIN EXPERIMENTAL
+{% if 'EXPERIMENTAL' in features %}
+
 # Add sparkmagic to the supported kernel and install livy server
 livy-create_logs_dir:
   file.directory:
@@ -194,6 +197,9 @@ livy-server-start_service:
     - name: livy
     - enable: True
     - reload: True
+
+{% endif %}
+# END EXPERIMENTAL
 
 {% if grains['hadoop.distro'] == 'CDH' %}
 dependency-configurations-python2:
